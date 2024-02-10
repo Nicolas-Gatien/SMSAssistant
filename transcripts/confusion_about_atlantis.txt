@@ -1,0 +1,26 @@
+[
+   {
+      "role": "user",
+      "content": "Onion?"
+   },
+   {
+      "role": "assistant",
+      "content": "No, Atlantis."
+   },
+   {
+      "role": "user",
+      "content": "Heh?"
+   },
+   {
+      "role": "assistant",
+      "content": "I don't hate Atlantis."
+   },
+   {
+      "role": "user",
+      "content": "I didn't day you did?"
+   },
+   {
+      "role": "assistant",
+      "content": "Apologies for the confusion. I'm on a quest to find Atlantis, not the Holy Grail."
+   }
+]
