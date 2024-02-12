@@ -2,20 +2,26 @@ from flask import Flask, request, redirect
 from twilio.twiml.messaging_response import MessagingResponse
 from datetime import datetime
 from config.settings import MY_PHONE, CONVERSATION_TIMEOUT
-from openai_handler import get_response
+from openai_handler import get_response, respond_to_prompt
 from transcript_handler import save_transcript
-import json
-import os
-
 
 APP = Flask(__name__)
 
-PERSONA = ""
 with open("config/persona.txt", 'r') as file:
     PERSONA = file.read()
 
 context = [{"role": "system", "content": PERSONA}]
 last_message_time = datetime.now()
+
+
+class Memory:
+    def __init__(self, timestamp, importance, text):
+        self.timestamp = timestamp  # DECAY IS CURRENTLY CALCULATED FOR EVERY SINGLE MEMORY
+        self.importance = importance
+        self.text = text
+
+
+memory_stream = []
 
 
 @APP.route("/sms", methods=['GET', 'POST'])
@@ -26,7 +32,7 @@ def sms_reply():
     if time_since_last_message.total_seconds() > CONVERSATION_TIMEOUT and len(context) > 1:
         save_transcript(context)
         context = [{"role": "system", "content": PERSONA}]
-        print("reset convo")
+        print("Reset Conversation")
 
     resp = MessagingResponse()
     message_sender = request.values.get("From")
