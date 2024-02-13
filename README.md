@@ -1,3 +1,8 @@
 # SMSAssistant
  
-Is a basic ChatGPT wrapper that uses the Twillio API and allows me to text ChatGPT.
+Currently my working repository for my Muse assistant.
+
+Features:
+- [ ] Text with SMS
+- [ ] Respond with SMS
+- [ ] Basic Long term Memory
