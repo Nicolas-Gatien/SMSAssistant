@@ -70,10 +70,7 @@ def generate_response(prompt):
 
     time_since_last_message = datetime.now() - last_message_time
     if time_since_last_message.total_seconds() > CONVERSATION_TIMEOUT and len(context) > 1:
-        save_transcript(context)
-        save_memories(context)
-        context = [{"role": "system", "content": PERSONA}]
-        print("Reset Conversation")
+        context = reset_conversation(context)
 
     context.append({"role": "user", "content": prompt})
     response = get_response(context)
@@ -81,6 +78,14 @@ def generate_response(prompt):
     last_message_time = datetime.now()
 
     return response
+
+
+def reset_conversation(context):
+    save_transcript(context)
+    save_memories(context)
+    print("Reset Conversation")
+
+    return [{"role": "system", "content": PERSONA}]
 
 
 while True:
